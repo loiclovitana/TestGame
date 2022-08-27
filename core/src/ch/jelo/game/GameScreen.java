@@ -10,12 +10,15 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import static com.badlogic.gdx.math.MathUtils.random;
+import static java.lang.Math.sqrt;
 
 public class GameScreen implements Screen {
 
     // static engine
     private static final float VIEW_WIDTH = 800;
     private static final float VIEW_HEIGHT = 600;
+    public static final float DISTANCE_SPAWN = (float) sqrt(VIEW_HEIGHT*VIEW_HEIGHT+VIEW_WIDTH*VIEW_WIDTH) / 2 + 50;
+
 
 
     // engine related
@@ -25,7 +28,7 @@ public class GameScreen implements Screen {
     // static GAME
     private static final int MAX_WILD_PENGUIN = 20;
     private static final float CHANCE_SPAWN_WILD_PENGUIN = 0.3f;
-    private static final float TIME_BETWEEN_SPAWN_TRY = 1; //time in second
+    private static final float TIME_BETWEEN_SPAWN_TRY = 1f; //time in second
 
     // Objects
     private Player player;
@@ -54,7 +57,7 @@ public class GameScreen implements Screen {
         spawnWildCooldown = 0f;
 
         // load the texture
-        playerImage = new Texture(Gdx.files.internal("penguin.jpg"));
+        playerImage = new Texture(Gdx.files.internal("penguin.png"));
         snowImage = new Texture(Gdx.files.internal("snow.jpg"));
         heartImage = new Texture(Gdx.files.internal("love.png"));
 
@@ -119,7 +122,7 @@ public class GameScreen implements Screen {
         if (wildPenguins.size < MAX_WILD_PENGUIN && spawnWildCooldown < 0) {
             spawnWildCooldown = TIME_BETWEEN_SPAWN_TRY;
             if (random() < CHANCE_SPAWN_WILD_PENGUIN) {
-                wildPenguins.add(new WildPenguin(player.position, VIEW_WIDTH / 2 + 100));
+                wildPenguins.add(new WildPenguin(player.position, DISTANCE_SPAWN));
                 System.out.println(wildPenguins.size);
             }
 
@@ -131,7 +134,7 @@ public class GameScreen implements Screen {
                 WildPenguin wildPenguin : wildPenguins) {
             float distanceWithPlayer = player.position.dst(wildPenguin.position);
             if (distanceWithPlayer > 1000f) {
-                wildPenguin.setRandomPosition(player.position, VIEW_WIDTH / 2 + 100);
+                wildPenguin.setRandomPosition(player.position, DISTANCE_SPAWN);
             } else if (distanceWithPlayer <= wildPenguin.getLoveDistance()) {
                 boolean isInLove = wildPenguin.fallingInLove(Gdx.graphics.getDeltaTime());
                 if (isInLove) {
