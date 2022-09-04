@@ -12,5 +12,8 @@ public class Follower extends GameObject{
     public float getLoveDistance() {
         return loveDistance;
     }
+    public void update(float delta, GameState gameState){
+        //todo
+    }
 
 }

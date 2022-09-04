@@ -30,4 +30,9 @@ public class WildPenguin extends GameObject {
         remainingTimeUntilLove-=elapsedTime;
         return remainingTimeUntilLove<0;
     }
+
+    @Override
+    public void update(float delta, GameState gameState) {
+    //TODO
+    }
 }
