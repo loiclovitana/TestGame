@@ -1,5 +1,6 @@
 package ch.jelo.game;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -8,11 +9,13 @@ public abstract class GameObject implements Comparable<GameObject> {
     public int z;
     public final Rectangle bounds;
 
-    public GameObject(float x, float y, float width, float height) {
+
+    public GameObject( float x, float y, float width, float height) {
         this(x, y, width, height, 0);
     }
 
     public GameObject(float x, float y, float width, float height, int depth) {
+
         this.position = new Vector2(x, y);
         this.bounds = new Rectangle(x - width / 2, y - height / 2, width, height);
         this.z = depth;
@@ -33,4 +36,7 @@ public abstract class GameObject implements Comparable<GameObject> {
     }
 
     public abstract void update(float delta, GameState gameState);
+
+    public abstract void draw(SpriteBatch batch);
+
 }

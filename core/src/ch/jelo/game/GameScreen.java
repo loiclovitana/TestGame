@@ -21,10 +21,7 @@ public class GameScreen implements Screen {
 
 
 
-    // Sprites
-    private Texture playerImage;
     private Texture snowImage;
-    private Texture heartImage;
 
     public GameScreen(TestGame game) {
         this.game = game;
@@ -36,9 +33,8 @@ public class GameScreen implements Screen {
 
 
         // load the texture
-        playerImage = new Texture(Gdx.files.internal("penguin.png"));
         snowImage = new Texture(Gdx.files.internal("snow.jpg"));
-        heartImage = new Texture(Gdx.files.internal("love.png"));
+
 
     }
 
@@ -61,20 +57,9 @@ public class GameScreen implements Screen {
         game.batch.begin();
         game.batch.draw(snowImage, -1000, -1000, 2000, 2000);
 
-        // draw all gameobject
-        for(GameObject  gobject : gameState.getAllObject()){
-            game.batch.draw(playerImage, gobject.position.x, gobject.position.y, gobject.bounds.width, gobject.bounds.height);
-        }
+        // draw gamestate
+        gameState.draw(game.batch);
 
-        // draw heart
-        for (WildPenguin wildPenguin : gameState.wildPenguins) {
-            float distanceWithPlayer = gameState.player.position.dst(wildPenguin.position);
-            if (distanceWithPlayer <= wildPenguin.getLoveDistance()) {
-                game.batch.draw(heartImage, wildPenguin.position.x + 20, wildPenguin.position.y + 60,
-                        20, 20); // FIXME heart should be a game object in itself
-
-            }
-        }
 
 
         game.batch.end();

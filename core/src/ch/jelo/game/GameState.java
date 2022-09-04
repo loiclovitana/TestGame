@@ -1,5 +1,6 @@
 package ch.jelo.game;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.HashSet;
@@ -89,7 +90,9 @@ public class GameState {
     }
 
 
-
-
-
+    public void draw(SpriteBatch batch) {
+        for(GameObject  gobject : this.getAllObject()){
+            gobject.draw(batch);
+        }
+    }
 }

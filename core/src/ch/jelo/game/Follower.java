@@ -1,6 +1,8 @@
 package ch.jelo.game;
 
-public class Follower extends GameObject{
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class Follower extends GameObject {
 
     private float loveDistance = 70f;
 
@@ -12,8 +14,14 @@ public class Follower extends GameObject{
     public float getLoveDistance() {
         return loveDistance;
     }
-    public void update(float delta, GameState gameState){
+
+    public void update(float delta, GameState gameState) {
         //todo
+    }
+
+    @Override
+    public void draw(SpriteBatch batch) {
+
     }
 
 }
