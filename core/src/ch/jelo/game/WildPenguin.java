@@ -1,6 +1,9 @@
 package ch.jelo.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+
+import static ch.jelo.game.Utils.DISTANCE_SPAWN;
 
 public class WildPenguin extends GameObject {
     private final static float PENGUIN_WIDTH=60;
@@ -33,6 +36,17 @@ public class WildPenguin extends GameObject {
 
     @Override
     public void update(float delta, GameState gameState) {
-    //TODO
+        float distanceWithPlayer = gameState.player.position.dst(this.position);
+        if (distanceWithPlayer > 1000f) {
+            this.setRandomPosition(gameState.player.position, DISTANCE_SPAWN);
+        } else if (distanceWithPlayer <= this.getLoveDistance()) {
+            boolean isInLove = this.fallingInLove(delta);
+            if (isInLove) {
+                // TODO add Follower
+            }
+        }
+
+
+        // TODO remove wild penguin
     }
 }
