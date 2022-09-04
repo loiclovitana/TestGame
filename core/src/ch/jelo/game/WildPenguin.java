@@ -12,7 +12,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class WildPenguin extends GameObject {
 
     // Graphics
-    private static Texture penguinImage = new Texture(Gdx.files.internal("penguin.png"));
+    private static Texture penguinImage = new Texture(Gdx.files.internal("wildpenguin.png"));
     private static Texture heartImage = new Texture(Gdx.files.internal("love.png"));
 
 
@@ -21,7 +21,7 @@ public class WildPenguin extends GameObject {
     private final static float PENGUIN_HEIGHT = 60;
     private final static float DEFAULT_LOVE_DISTANCE = 70;
 
-    private final static float SPEED = 1f;
+    private final static float SPEED = 70f;
 
     private final static float MOVING_DELAY_MAX = 3;
     private final static float STOP_DELAY_MAX = 1;
@@ -29,7 +29,7 @@ public class WildPenguin extends GameObject {
     private final static float STOP_DELAY_MIN = 0.5f;
     private final static float PROBA_MOVING = 0.6f;
 
-    private final static float TIME_NEEDED_FOR_LOVE = 5;
+    private final static float TIME_NEEDED_FOR_LOVE = 3;
 
     //attributs
     private float remainingTimeUntilLove = TIME_NEEDED_FOR_LOVE;
@@ -81,19 +81,24 @@ public class WildPenguin extends GameObject {
         } else if (isFallingInLove) {
             boolean isInLove = fallingInLove(delta);
             if (isInLove) {
-                // TODO add Follower
+                gameState.addGameObject(transformInFollower());
+                gameState.removeGameObject(this);
             }
         } else {
-            remainingTimeUntilMovementChange-=delta;
-            if(remainingTimeUntilMovementChange<=0f) {
+            remainingTimeUntilMovementChange -= delta;
+            if (remainingTimeUntilMovementChange <= 0f) {
                 setRandomMovement();
             }
-            this.position.mulAdd(direction,SPEED);
+            Vector2 movement= direction.cpy().scl(delta*SPEED);
+
+            this.position.add(movement);
 
         }
 
+    }
 
-        // TODO remove wild penguin
+    private GameObject transformInFollower() {
+        return new Follower(this.position.x, this.position.y, this.bounds.width, this.bounds.height);
     }
 
     @Override

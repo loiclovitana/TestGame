@@ -14,7 +14,7 @@ public class Player extends ControlledGameObject {
     private final static float PLAYER_WIDTH=64;
     private final static float PLAYER_HEIGHT =64;
 
-    private float speed = 5f;
+    private float speed = 200f;
 
     public Player(float x, float y) {
         super(x, y, PLAYER_WIDTH, PLAYER_HEIGHT,1);
@@ -27,7 +27,7 @@ public class Player extends ControlledGameObject {
 
     @Override
     public void update(float delta, GameState gameState, Vector2 direction, Set<Action> actions) {
-        Vector2 movement = direction.setLength(1.0f).scl(getSpeed());
+        Vector2 movement = direction.cpy().setLength(1.0f).scl(getSpeed()*delta);
         this.position.add(movement);
     }
 

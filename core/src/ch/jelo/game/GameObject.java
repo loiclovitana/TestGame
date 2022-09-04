@@ -4,13 +4,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class GameObject implements Comparable<GameObject> {
+import java.util.Comparator;
+
+public abstract class GameObject {
+
+    public static GameObjectDrawComparator GAME_OBJECT_DRAW_COMPARATOR = new GameObject.GameObjectDrawComparator();
+
     public final Vector2 position;
     public int z;
     public final Rectangle bounds;
 
 
-    public GameObject( float x, float y, float width, float height) {
+    public GameObject(float x, float y, float width, float height) {
         this(x, y, width, height, 0);
     }
 
@@ -30,10 +35,14 @@ public abstract class GameObject implements Comparable<GameObject> {
         this.position.y = y;
     }
 
-    @Override
-    public int compareTo(GameObject o) {
-        return o.z != this.z ? Integer.compare(this.z,o.z) : Float.compare(this.position.y, o.position.y);
+    private static class GameObjectDrawComparator implements Comparator<GameObject> {
+
+        @Override
+        public int compare(GameObject o1, GameObject o2) {
+            return o1.z != o2.z ? Integer.compare(o1.z, o2.z) : - Float.compare(o1.position.y, o2.position.y);
+        }
     }
+
 
     public abstract void update(float delta, GameState gameState);
 
